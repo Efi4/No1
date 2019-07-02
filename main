@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+
+namespace No1
+{
+    class Program
+    {
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        static void Main(string[] args)
+        {
+            var desc = FindWindow(null, "HD-Client");
+            var desc_scr = FindWindow(null, "Bluestacks");
+
+            Process p = Process.GetProcessesByName("notepad").FirstOrDefault();
+            if (p != null)
+            {
+                IntPtr h = p.MainWindowHandle;
+                SetForegroundWindow(h);
+                SendKeys.SendWait("k");
+            }
+
+
+            if ( SetForegroundWindow(desc))
+            {
+                 SendKeys.Send("A");
+                    
+
+            }
+
+
+            System.Console.Write("Дескриптор" + desc);
+            Console.Read();
+        
+        }
+
+        
+
+    }
+}
